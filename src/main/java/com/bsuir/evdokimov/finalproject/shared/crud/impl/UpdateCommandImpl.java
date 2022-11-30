@@ -10,6 +10,7 @@ import com.bsuir.evdokimov.finalproject.shared.validation.Validator;
 import com.bsuir.evdokimov.finalproject.shared.validation.Error;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class UpdateCommandImpl<E, R, D, I> implements UpdateCommand<E, R, D, I> {
 

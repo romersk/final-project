@@ -1,6 +1,8 @@
 package com.bsuir.evdokimov.finalproject.users.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -51,5 +53,13 @@ public class AuthorityEvdokimovRD implements GrantedAuthority {
 
     public void setRoleDescription(String roleDescription) {
         this.roleDescription = roleDescription;
+    }
+
+    public List<UserEvdokimovRD> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<UserEvdokimovRD> users) {
+        this.users = users;
     }
 }

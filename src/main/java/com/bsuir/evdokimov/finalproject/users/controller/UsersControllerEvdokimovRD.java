@@ -1,12 +1,12 @@
 package com.bsuir.evdokimov.finalproject.users.controller;
 
 import com.bsuir.evdokimov.finalproject.config.AuthorithyEvdokimovRD;
+import com.bsuir.evdokimov.finalproject.shared.search.Page;
 import com.bsuir.evdokimov.finalproject.users.dto.UsersDtoEvdokimovRD;
 import com.bsuir.evdokimov.finalproject.users.entity.UserEvdokimovRD;
 import com.bsuir.evdokimov.finalproject.users.request.UserRequestEvdokimovRD;
 import com.bsuir.evdokimov.finalproject.users.service.UserServiceEvdokimovRD;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -32,6 +32,13 @@ public class UsersControllerEvdokimovRD {
         } else {
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
+    }
+
+    @GetMapping("/admin/users/{id}")
+    public ResponseEntity<?> findAll(Principal user, @PageableDefault(page = 0, size = 20) Pageable pageable, @PathVariable Long id) {
+        UserEvdokimovRD userObj = (UserEvdokimovRD) service.loadUserByUsername(user.getName());
+        UsersDtoEvdokimovRD dto = service.getById(userObj.getId());
+       return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
     @PutMapping("/admin/users/{id}")

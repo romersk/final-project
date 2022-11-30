@@ -1,7 +1,15 @@
 package com.bsuir.evdokimov.finalproject.users.entity;
 
+import com.bsuir.evdokimov.finalproject.paysheet.entity.PaySheetEvdokimovRD;
+import com.bsuir.evdokimov.finalproject.position.entity.PositionEvdokimovRD;
+import com.bsuir.evdokimov.finalproject.task.entity.TaskEvdokimovRD;
+import com.bsuir.evdokimov.finalproject.workday.entity.WorkDayEvdokimovRD;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user_personal")
@@ -24,8 +32,23 @@ public class PersonEvdokimovRD {
     private String phoneNumber;
 
     @OneToOne(mappedBy = "person")
-    @JsonBackReference
+    @JsonBackReference(value = "person")
     private UserEvdokimovRD user;
+
+    @OneToMany(mappedBy="person")
+    @JsonManagedReference(value = "position-paysheet")
+    @JsonIgnore
+    private List<PaySheetEvdokimovRD> paySheet;
+
+    @OneToMany(mappedBy="person")
+    @JsonManagedReference(value = "person-task")
+    @JsonIgnore
+    private List<TaskEvdokimovRD> tasks;
+
+    @OneToMany(mappedBy="person")
+    @JsonManagedReference(value = "person-workday")
+    @JsonIgnore
+    private List<WorkDayEvdokimovRD> workDays;
 
     public Long getId() {
         return id;
@@ -73,5 +96,29 @@ public class PersonEvdokimovRD {
 
     public void setUser(UserEvdokimovRD user) {
         this.user = user;
+    }
+
+    public List<PaySheetEvdokimovRD> getPaySheet() {
+        return paySheet;
+    }
+
+    public void setPaySheet(List<PaySheetEvdokimovRD> paySheet) {
+        this.paySheet = paySheet;
+    }
+
+    public List<TaskEvdokimovRD> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<TaskEvdokimovRD> tasks) {
+        this.tasks = tasks;
+    }
+
+    public List<WorkDayEvdokimovRD> getWorkDays() {
+        return workDays;
+    }
+
+    public void setWorkDays(List<WorkDayEvdokimovRD> workDays) {
+        this.workDays = workDays;
     }
 }

@@ -1,5 +1,7 @@
 package com.bsuir.evdokimov.finalproject.users.entity;
 
+import com.bsuir.evdokimov.finalproject.position.entity.PositionEvdokimovRD;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -46,8 +49,13 @@ public class UserEvdokimovRD implements UserDetails {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id", referencedColumnName = "id")
-    @JsonManagedReference
+    @JsonManagedReference(value = "person")
     private PersonEvdokimovRD person;
+
+    @ManyToOne
+    @JoinColumn(name="position_id")
+    @JsonBackReference(value = "position")
+    private PositionEvdokimovRD position;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -134,5 +142,13 @@ public class UserEvdokimovRD implements UserDetails {
 
     public void setPerson(PersonEvdokimovRD person) {
         this.person = person;
+    }
+
+    public PositionEvdokimovRD getPosition() {
+        return position;
+    }
+
+    public void setPosition(PositionEvdokimovRD position) {
+        this.position = position;
     }
 }
